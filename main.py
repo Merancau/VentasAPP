@@ -38,6 +38,16 @@ def delete_client(client_name):
         _invalid_name()
 
 
+def search_client(client_name):
+    clients_list = clients.split(',')
+
+    for client in clients_list:
+        if client != client_name:
+            continue
+        else:
+            return True
+
+
 def _add_coma():
     global clients
     clients += ','
@@ -50,7 +60,8 @@ def _print_welcome():
     
     [C]reate client
     [D]elete client
-    [U]pdate client''')
+    [U]pdate client
+    [S]earch client''')
 
 
 def _get_client_name():
@@ -75,6 +86,14 @@ def run():
         client_name = _get_client_name()     
         update_client(client_name)
         list_clients()
+    elif command == 'S':
+        client_name = _get_client_name()
+        found = search_client(client_name)
+
+        if found:
+            print(f'{client_name} is in the client\'s list')
+        else:
+            _invalid_name()
     else:
         print('Invalid command')
 
