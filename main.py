@@ -1,24 +1,43 @@
 import sys
 
-clients = ['Pablo', 'Ricardo']
+clients = [
+    {
+        'name': 'Pablo',
+        'company': 'Google',
+        'email': 'pablo@google.com',
+        'position': 'Software engineer'
+    },
+    {
+        'name': 'Sergio',
+        'company': 'Facebook',
+        'email': 'ricardo@facebook.com',
+        'position': 'Data engineer'
+    }
+]
 
 
 def _invalid_name(client_name):
     print(f'{client_name} is not in client\'s list')
 
 
-def create_client(client_name):
+def create_client(client):
     global clients
 
-    if client_name not in clients:
-        clients.append(client_name)
+    if client not in clients:
+        clients.append(client)
     else:
         print('Client already is in the client\'s list')
 
 
 def list_clients():
     for idx, client in enumerate(clients):
-        print(f'{idx} {client}')
+        print('{uid} | {name} | {company} | {email} | {position}'.format(
+            uid = idx,
+            name = client['name'],
+            company = client['company'],
+            email = client['email'],
+            position = client['position']
+        ))
 
 
 def update_client(client_name):
@@ -65,6 +84,15 @@ def _print_welcome():
     [S]earch client''')
 
 
+def _get_client_field(field_name):
+    field = None
+
+    while not field:
+        field = input(f'What is the client {field_name}? ')
+
+    return field
+
+
 def _get_client_name():
     client_name = None
 
@@ -92,8 +120,13 @@ def run():
     command = command.upper()
 
     if command == 'C':
-        client_name = _get_client_name()
-        create_client(client_name)
+        client = {
+            'name': _get_client_field('name'),
+            'company': _get_client_field('company'),
+            'email': _get_client_field('email'),
+            'position': _get_client_field('position')
+        }
+        create_client(client)
         list_clients()
     elif command == 'D':
         client_name = _get_client_name()
