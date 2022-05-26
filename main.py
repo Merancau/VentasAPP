@@ -1,62 +1,56 @@
 import sys
 
-clients = 'Matias,David,Diego,'
+clients = ['Pablo', 'Ricardo']
 
 
-def _invalid_name():
-    print('Client is not in client\'s list')
+def _invalid_name(client_name):
+    print(f'{client_name} is not in client\'s list')
 
 
 def create_client(client_name):
     global clients
 
     if client_name not in clients:
-        clients += client_name
+        clients.append(client_name)
     else:
         print('Client already is in the client\'s list')
 
 
 def list_clients():
-    global clients
-    print(clients)
+    for idx, client in enumerate(clients):
+        print(f'{idx} {client}')
 
 
 def update_client(client_name):
     global clients
 
     if client_name in clients:
+        index = clients.index(client_name)
         updated_client_name = None
 
         while not updated_client_name:
             updated_client_name = input('What is the updated client name? ')
-
-        clients = clients.replace(client_name, updated_client_name)
+        
+        clients[index] = updated_client_name
     else:
-       _invalid_name()
+       _invalid_name(client_name)
 
 
 def delete_client(client_name):
     global clients
 
     if client_name in clients:
-        clients = clients.replace(client_name + ',', '')
+        clients.remove(client_name)
     else:
-        _invalid_name()
+        _invalid_name(client_name)
 
 
 def search_client(client_name):
-    clients_list = clients.split(',')
-
-    for client in clients_list:
+    for client in clients:
         if client != client_name:
             continue
         else:
             return True
-
-
-def _add_coma():
-    global clients
-    clients += ','
 
 
 def _print_welcome():
@@ -64,6 +58,7 @@ def _print_welcome():
     
     What would you like to do today?
     
+    [L]ist   client
     [C]reate client
     [D]elete client
     [U]pdate client
@@ -93,7 +88,7 @@ def run():
 
     while not command:
         command = input('> ')
-        
+
     command = command.upper()
 
     if command == 'C':
@@ -115,7 +110,9 @@ def run():
         if found:
             print(f'{client_name} is in the client\'s list')
         else:
-            _invalid_name()
+            _invalid_name(client_name)
+    elif command == 'L':
+        list_clients()
     else:
         print('Invalid command')
 
