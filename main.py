@@ -91,7 +91,8 @@ def _get_client_from_user():
 
 
 def _print_welcome():
-    print('''Welcome to PLATZI VENTAS
+    print('''
+    Welcome to VENTAS APP
     
     What would you like to do today?
     
